@@ -129,7 +129,7 @@ class Timer extends React.Component{
                 </div>  */}
                 <ul>
                 {this.state.people.map((item, i) => {
-                    return <Person key={item.id} item = {item}></Person>
+                    return <Person key={item.id} item = {item}  content={item.name}></Person>
                 })}
                 </ul>
             </div>);
@@ -153,6 +153,7 @@ class Person extends React.Component{
         })
     }
     shouldComponentUpdate(nextProps, nextState) {
+        // return nextProps.content !== this.props.content;
         return nextProps.item.name !== this.state.name;
     }
     render() {
