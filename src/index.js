@@ -46,7 +46,7 @@ class Timer extends React.Component{
                 name: 'zhangsan3'
             }]
         }
-        //this.handleClick = this.handleClick.bind(this)
+        this.handleClick = this.handleClick.bind(this)
     }
     //
     // static defaultProps ={
