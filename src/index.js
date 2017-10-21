@@ -4,28 +4,29 @@ import './index.css';
 // import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-@renderSafe()
+@renderSafe
 class Timer extends React.Component{
     constructor() {
         super();
         console.log('constructor')
         this.state = {
-           
+            a:0
         }
-        
     }
     
     componentWillMount() {
-        console.log('componentWillMount')
+        // console.log('componentWillMount')
+       // this.setState({a:2})
     }
     componentDidMount() {
       
         console.log('componentDidMount')
+        //this.setState({a:2})
         
     }
     componentWillReceiveProps(nextProps) {
         console.log('componentWillReceiveProps')
-        
+        this.setState({a:2})
     }
     shouldComponentUpdate(nextProps, nextState) {
         console.log('shouldComponentUpdate')
@@ -34,19 +35,23 @@ class Timer extends React.Component{
 
     componentWillUpdate() {
         console.log('componentWillUpdate')
-        
 
     }
     componentDidUpdate() {
         console.log('componentDidUpdate')
-        
+        this.setState({a:3})
         
     }
     componentWillUnmount() {
         console.log('componentWillUnmount')
+        this.setState({a:2})
     }
 
-   
+    handleClick = () =>{
+        this.setState({
+            a: 3
+        });
+    }
     render() {
         return (
             <div onClick={this.handleClick}> 
@@ -56,12 +61,26 @@ class Timer extends React.Component{
 }
 
 
-ReactDOM.render(<Timer color={"blue"} />, document.getElementById('root'));
+ReactDOM.render(<Timer color={"请看控制台"} />, document.getElementById('root'));
 registerServiceWorker();
 
 function renderSafe(target){
-    const {componentWillMount,componentDidMount,componentWillReceiveProps,shouldComponentUpdate,componentDidUpdate,componentWillUnmount} = target.proptotype
-    console.log(componentWillMount)
+    const _self = target.prototype
+    const {componentWillMount,componentDidMount,componentWillReceiveProps,shouldComponentUpdate,componentDidUpdate,componentWillUnmount} = target.prototype
+    const lifecycleArray = [componentWillMount,componentDidMount,componentWillReceiveProps,shouldComponentUpdate,componentDidUpdate,componentWillUnmount]
+    
+    lifecycleArray.forEach(val=>{
+        test(_self,val)
+    })
+    
+}
+function test(that,lifecycleFn){
+    // console.log(that,lifecycleFn)
+    try {
+        lifecycleFn && lifecycleFn.bind(that)()
+    } catch (error) {
+        console.error(`${lifecycleFn.name}有问题`,error)
+    }
 }
 
 //let 
